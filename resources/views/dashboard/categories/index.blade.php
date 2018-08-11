@@ -1,7 +1,7 @@
 @extends('dashboard.app')
 
 @section('title')
-    Админка
+    Категории
 @endsection
 
 @section('content')

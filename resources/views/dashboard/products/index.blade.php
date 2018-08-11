@@ -1,11 +1,11 @@
 @extends('dashboard.app')
 
 @section('title')
-    Админка
+    Продукты
 @endsection
 
 @section('content')
-    <h1>Список категорий</h1>
+    <h1>Список продуктов</h1>
     <hr>
     {{-- Если в сессии есть переменная, то выводим--}}
     @if (Session::has('message'))

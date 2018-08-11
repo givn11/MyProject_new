@@ -59,10 +59,35 @@ class NewsController extends Controller
 
             //dd($request);
             //dd($data);
+        if($request->hasFile('img')){
+            //Экземпляр объекта класса UploadFile
+            $image = $request->file('img');
 
+            //Задаем уникальное имя использую временнную метку и рандомайзер
+            //getClientOriginalExtension() - получаем расширение передаваемого файла
+            $filename = time() . '_' . rand(1,9) . '.' . $image->getClientOriginalExtension();
+
+            //Путь где будет храниться наше изображение
+            //public_path($str) - обращается к корню public клиентской части
+            //принимает доп. параметр  пути внутри public
+            $location = public_path(env('URL_IMAGE_PRODUCTS') . $filename);
+
+            //локальное размещение
+            //Режим и сохраняем в нашей папке
+            Image::make($image)->resize(330, 380)->save(env('URL_IMAGE_PRODUCTS') .$location);
+            // Image::make($image)->resize(50, 60)->save(env('URL_IMAGE_PRODUCTS') . '/mini_' . $location);
+            // $all = $request->all();
+            $data['img'] = $filename;
+        }
+
+        try{
             News::create($data);
-
-            return redirect()->route('news.index');
+            $message = 'Запись успешно добавлена в базу!';
+        }catch (\Exception $e){
+            $message = '<b>Ошибка</b>: ' . $e->getMessage();
+        }
+        Session::flash('message', $message);
+        return redirect()->route('news.index');
     }
 
     /**

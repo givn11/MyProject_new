@@ -19,18 +19,31 @@ Auth::routes();
 
 //Главная
 Route::get('/', 'MainController@index')->name('home');
+Route::get('/news', 'MainController@getNews')->name('news');
 
 Route::group(['prefix' => 'dashboard'], function () {
-    //Route::resource('/', 'TestController');
-    Route::resource('/news', 'NewsController');
+    Route::group(['middleware' => 'auth'], function (){
+        Route::get('/', function (){
+            return view('dashboard.main');
+        });
+        Route::resource('/news', 'NewsController', array(
+            /*    'only' => [
+                    'index',
+                    'create',
+                    'store'
+                ],*/
+            /*      'middleware' => [
+                      'store' => 'ResizeImage'
+                  ]*/
+        ));
+        Route::resource('/categories', 'CategoriesController');
+        Route::resource('/products', 'ProductController');
+    });
 });
 
-Route::group(['prefix' => 'dashboard'], function () {
-    Route::resource('/categories', 'CategoriesController');
-});
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/dashboard', 'TestController@dashboard')->name('dashboard');
+//Route::get('/dashboard', 'TestController@dashboard')->name('dashboard');
 Route::group(['prefix' => 'test'], function (){
 //Список
         Route::get('/index', 'TestController@index');

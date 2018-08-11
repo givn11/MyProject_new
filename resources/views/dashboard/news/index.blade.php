@@ -1,5 +1,9 @@
 @extends('dashboard.app')
 
+@section('title')
+    Новости
+@endsection
+
 @section('content')
     <h1>Список новостей</h1>
     <hr>
