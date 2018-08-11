@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <label for="alias">Картинка</label>
-            <input type="file" name="images" class="form-control" id="images">
+            <input type="file" name="thumb" class="form-control" id="thumb">
         </div>
 
         <div class="form-group">

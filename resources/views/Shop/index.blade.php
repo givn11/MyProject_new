@@ -384,6 +384,9 @@
 @endsection
 
 @section('content2')
+    <div class="col-md-12">
+        @include('shop.includes.slider')
+    </div>
     <!-- START PRODUCT-AREA (1) -->
     <div class="product-area">
         <div class="row">

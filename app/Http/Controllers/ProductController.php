@@ -56,9 +56,9 @@ class ProductController extends Controller
 
         //dd($request);
         //dd($data);
-        if($request->hasFile('images')){
+        if($request->hasFile('thumb')){
             //Экземпляр объекта класса UploadFile
-            $image = $request->file('images');
+            $image = $request->file('thumb');
 
             //Задаем уникальное имя использую временнную метку и рандомайзер
             //getClientOriginalExtension() - получаем расширение передаваемого файла
@@ -74,7 +74,7 @@ class ProductController extends Controller
             Image::make($image)->resize(330, 380)->save($location);
             // Image::make($image)->resize(50, 60)->save(env('URL_IMAGE_PRODUCTS') . '/mini_' . $location);
             // $all = $request->all();
-            $data['images'] = $filename;
+            $data['thumb'] = $filename;
         }
 
         try{
@@ -125,15 +125,15 @@ class ProductController extends Controller
         //Получаем все данные из форм
         $data = $request->all();
         //Работа с картинкой
-        if($request->hasFile('images')){
+        if($request->hasFile('thumb')){
             //Экземпляр объекта класса UploadFile
-            $image = $request->file('images');
+            $image = $request->file('thumb');
             $filename = time() . '_' . rand(1,9) . '.' . $image->getClientOriginalExtension();
             $location = public_path( env('URL_IMAGE_PRODUCTS') . $filename);
             Image::make($image)->resize(330, 380)->save($location);
             //удаляем старый файл из папки
             // unset(env('URL_IMAGE_PRODUCTS') . $novost->img);
-            $data['images'] = $filename;
+            $data['thumb'] = $filename;
         }
 
         try{

@@ -41,18 +41,28 @@ Route::group(['prefix' => 'dashboard'], function () {
     });
 });
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/profile', 'UserController@getProfile')->name('user.profile');
+});
 
-//Route::get('/dashboard', 'TestController@dashboard')->name('dashboard');
-Route::group(['prefix' => 'test'], function (){
-//Список
-        Route::get('/index', 'TestController@index');
-//Создание
-        Route::get('/create', 'TestController@create');
-        Route::get('/store', 'TestController@store');
-//Обновление
-        Route::get('/edit', 'TestController@edit');
-        Route::get('/update', 'TestController@update');
-//Удаление
-        Route::get('/delete', 'TestController@delete');
-    });
+/*Добавление товара в корзину,  где product_id - id товара из БД*/
+Route::get('/add-to-cart/{product_id}', 'CartController@addToCart')->name('product.add');
+Route::get('/shopping-cart/', [
+    'uses' => 'CartController@getCart',
+    'as' => 'product.shoppingCart'
+]);
+/*Страница оформления заказа*/
+Route::get('/checkout', 'CheckoutController@getCheckout')->name('get.checkout');
+Route::post('/checkout', 'CheckoutController@postCheckout')->name('post.checkout');
+
+Route::get('/reduce/{id}', [
+    'uses' => 'CartController@getReduceByOne',
+    'as' => 'product.reduceByOne'
+]);
+Route::get('/remove/{id}', [
+    'uses' => 'CartController@getRemoveItem',
+    'as' => 'product.remove'
+]);
+
+// Категории
+Route::get('/category/{alias}', 'CategoriesController@showCategoryByAlias')->name('client.category');

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Categories;
+use App\Menu;
 use App\MyHelpers;
+use App\News;
+use App\Product;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -128,5 +131,22 @@ class CategoriesController extends Controller
         }
         Session::flash('message', $message);
         return redirect()->route('categories.index');
+    }
+    public function showCategoryByAlias(Request $request, $alias){
+        $news = News::orderBy('id', 'desc')->get();
+        $menus = Menu::all();
+        $categories = Categories::all();
+        $category = Categories::find(1)->where('alias', $alias)->first();
+        $products = Product::where('category_id', $category->id)->paginate(3);
+
+        //dump($products);
+
+        return view('shop.category', [
+            'news'=> $news,
+            'menus' => $menus,
+            'category' => $category,
+            'categories' => $categories,
+            'products' => $products
+        ]);
     }
 }

@@ -34,8 +34,8 @@
 
         <div class="form-group">
             <label for="alias">Картинка</label>
-            <img width="150" src="{{ env('URL_IMAGE_PRODUCTS') . $prod->images }}" alt="">
-            <input type="file" name="images" class="form-control" id="images" value="">
+            <img width="150" src="{{ env('URL_IMAGE_PRODUCTS') . $prod->thumb }}" alt="">
+            <input type="file" name="thumb" class="form-control" id="thumb" value="">
         </div>
 
         <div class="form-group">
