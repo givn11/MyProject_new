@@ -17,8 +17,8 @@
         {{--<input type="hidden" name="user_id" value="1" class="form-control" id="">--}}
 
         <div class="form-group">
-            <label for="introtext">Описание</label>
-            <textarea name="introtext" class="form-control" id="introtext" rows="3">{{$categ->description}}</textarea>
+            <label for="description">Описание</label>
+            <textarea name="description" class="form-control" id="description" rows="3">{{$categ->description}}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block float-right">

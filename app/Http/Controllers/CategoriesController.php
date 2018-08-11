@@ -7,6 +7,7 @@ use App\MyHelpers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
@@ -52,8 +53,13 @@ class CategoriesController extends Controller
         //dd($request);
         //dd($data);
 
-        Categories::create($data);
-
+        try{
+            Categories::create($data);
+            $message = 'Запись успешно добавлена в базу!';
+        }catch (\Exception $e){
+            $message = '<b>Ошибка</b>: ' . $e->getMessage();
+        }
+        Session::flash('message', $message);
         return redirect()->route('categories.index');
     }
 
@@ -76,7 +82,11 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('dashboard.categories.edit', [
+            //News::findOrFail();
+            //DB::select('news')->where(['id' => $id])->get();
+            'categ' => Categories::find($id) //получаем единственную запись c помощью find по id
+        ]);
     }
 
     /**
@@ -88,7 +98,19 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Находим экземпляр новости по id
+        $categ = Categories::find($id);
+        //Получаем все данные из форм
+        $data = $request->all();
+
+        try{
+            $categ->update($data);
+            $message = "Новость {$categ->title} успешно обновлена!";
+        }catch (\Exception $e){
+            $message = '<b>Ошибка</b>: ' . $e->getMessage();
+        }
+        Session::flash('message', $message);
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -99,6 +121,16 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            //Удаление запиcи
+            Categories::find($id)->delete();
+            //News::destroy($id);
+            //Или News::destroy($id)
+            $message = "Запись успешно удалена!";
+        }catch (\Exception $e){
+            $message = '<b>Ошибка: </b>' . $e->getMessage();
+        }
+        Session::flash('message', $message);
+        return redirect()->route('categories.index');
     }
 }

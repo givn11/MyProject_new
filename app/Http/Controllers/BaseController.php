@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class BaseController extends Controller
 {
-    //
+    public $menus;
+    public $categories;
+    public $brands;
 }

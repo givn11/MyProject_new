@@ -12,8 +12,8 @@
         </div>
 
         <div class="form-group">
-            <label for="text">Описание</label>
-            <textarea name="text" class="form-control" id="text" rows="3"></textarea>
+            <label for="description">Описание</label>
+            <textarea name="description" class="form-control" id="description" rows="3"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block float-right">

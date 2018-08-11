@@ -7,6 +7,8 @@ use App\News;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class NewsController extends Controller
 {
@@ -74,7 +76,7 @@ class NewsController extends Controller
 
             //локальное размещение
             //Режим и сохраняем в нашей папке
-            Image::make($image)->resize(330, 380)->save(env('URL_IMAGE_PRODUCTS') .$location);
+            Image::make($image)->resize(330, 380)->save($location);
             // Image::make($image)->resize(50, 60)->save(env('URL_IMAGE_PRODUCTS') . '/mini_' . $location);
             // $all = $request->all();
             $data['img'] = $filename;
@@ -109,7 +111,11 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('dashboard.news.edit', [
+            //News::findOrFail();
+            //DB::select('news')->where(['id' => $id])->get();
+            'novost' => News::find($id) //получаем единственную запись c помощью find по id
+        ]);
     }
 
     /**
@@ -121,7 +127,30 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Находим экземпляр новости по id
+        $novost = News::find($id);
+        //Получаем все данные из форм
+        $data = $request->all();
+        //Работа с картинкой
+        if($request->hasFile('img')){
+            //Экземпляр объекта класса UploadFile
+            $image = $request->file('img');
+            $filename = time() . '_' . rand(1,9) . '.' . $image->getClientOriginalExtension();
+            $location = public_path( env('URL_IMAGE_PRODUCTS') . $filename);
+            Image::make($image)->resize(330, 380)->save($location);
+            //удаляем старый файл из папки
+            // unset(env('URL_IMAGE_PRODUCTS') . $novost->img);
+            $data['img'] = $filename;
+        }
+
+        try{
+            $novost->update($data);
+            $message = "Новость {$novost->title} успешно обновлена!";
+        }catch (\Exception $e){
+            $message = '<b>Ошибка</b>: ' . $e->getMessage();
+        }
+        Session::flash('message', $message);
+        return redirect()->route('news.index');
     }
 
     /**
@@ -132,6 +161,16 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            //Удаление запиcи
+            News::find($id)->delete();
+            //News::destroy($id);
+            //Или News::destroy($id)
+            $message = "Запись успешно удалена!";
+        }catch (\Exception $e){
+            $message = '<b>Ошибка: </b>' . $e->getMessage();
+        }
+        Session::flash('message', $message);
+        return redirect()->route('news.index');
     }
 }
