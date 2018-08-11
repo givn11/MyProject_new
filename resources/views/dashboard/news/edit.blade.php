@@ -17,7 +17,7 @@
         {{--<input type="hidden" name="user_id" value="1" class="form-control" id="">--}}
 
         <div class="form-group">
-            <label for="img">Картинко</label>
+            <label for="img">Картинка</label>
             <img width="150" src="{{ env('URL_IMAGE_PRODUCTS') . $novost->img }}" alt="">
             <input type="file" name="img" class="form-control" id="img" value="">
         </div>

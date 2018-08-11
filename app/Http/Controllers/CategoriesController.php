@@ -83,8 +83,6 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         return view('dashboard.categories.edit', [
-            //News::findOrFail();
-            //DB::select('news')->where(['id' => $id])->get();
             'categ' => Categories::find($id) //получаем единственную запись c помощью find по id
         ]);
     }
@@ -98,14 +96,14 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Находим экземпляр новости по id
+        //Находим экземпляр категории по id
         $categ = Categories::find($id);
         //Получаем все данные из форм
         $data = $request->all();
 
         try{
             $categ->update($data);
-            $message = "Новость {$categ->title} успешно обновлена!";
+            $message = "Категория {$categ->title} успешно обновлена!";
         }catch (\Exception $e){
             $message = '<b>Ошибка</b>: ' . $e->getMessage();
         }
@@ -124,8 +122,6 @@ class CategoriesController extends Controller
         try{
             //Удаление запиcи
             Categories::find($id)->delete();
-            //News::destroy($id);
-            //Или News::destroy($id)
             $message = "Запись успешно удалена!";
         }catch (\Exception $e){
             $message = '<b>Ошибка: </b>' . $e->getMessage();

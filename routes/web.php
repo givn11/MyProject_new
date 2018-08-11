@@ -25,7 +25,7 @@ Route::group(['prefix' => 'dashboard'], function () {
     Route::group(['middleware' => 'auth'], function (){
         Route::get('/', function (){
             return view('dashboard.main');
-        })->name('dashboard');
+        })  ->name('dashboard');
         Route::resource('/news', 'NewsController', array(
             /*    'only' => [
                     'index',
