@@ -53,8 +53,10 @@
 
 @include('shop.includes.header')
 <!-- START PAGE-CONTENT -->
+<div class="container">
 @yield('content')
-
+</div>
+<br>
 <!-- END PAGE-CONTENT -->
 @include('shop.includes.footer')
 

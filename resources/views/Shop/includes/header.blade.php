@@ -31,13 +31,19 @@
                         <p class="welcome-msg">Default welcome msg!</p>
                     </div>
                     <!-- Start Top-Link -->
-                    <div class="top-link">
-                        <ul class="link">
-                            <li><a href="my-account.html"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="wishlist.html"><i class="fa fa-heart"></i> Wish List (0)</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-share"></i> Checkout</a></li>
-                            <li><a href="account.html"><i class="fa fa-unlock-alt"></i> Login</a></li>
-                        </ul>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="{{ route('product.shoppingCart') }}"><i class="fa fa-shopping-cart"></i> Корзина <span class="badge">{{ Session::has('cart') ? Session::get('cart')->totalQty : 0 }}</span></a> </li>
+                                @if(Auth::check())
+                                    <li><a href="{{ route('user.profile') }}"><i class="fa fa-user"></i> Профиль</a></li>
+                                    <li><a href="#"><i class="fa fa-user"></i> Выход</a></li>
+                                @else
+                                    <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> Войти</a></li>
+                                    <li><a href="{{ route('register') }}"><i class="fa fa-lock"></i> Регистрация</a></li>
+                                @endif
+                            </ul>
+                        </div>
                     </div>
                     <!-- End Top-Link -->
                 </div>
@@ -104,7 +110,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <div class="logo">
-                        <a href="index.html" title="Malias"><img src="{{ asset('shop') }}/img/logo.png" alt="Malias"></a>
+                        <a href="{{ route('home') }}" title="Malias"><img src="{{ asset('shop') }}/img/logo.png" alt="Malias"></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-12">
@@ -113,22 +119,9 @@
                             <div class="search-container">
                                 <select>
                                     <option class="all-cate">All Categories</option>
-                                    <optgroup  class="cate-item-head" label="Cameras & Photography">
-                                        <option class="cate-item-title">Handbags</option>
-                                        <option class="c-item">Blouses And Shirts</option>
-                                        <option class="c-item">Clouthes</option>
-                                    </optgroup>
-                                    <optgroup  class="cate-item-head" label="Laptop & Computer">
-                                        <option class="cate-item-title">Apple</option>
-                                        <option class="c-item">Dell</option>
-                                        <option class="c-item">Hp</option>
-                                        <option class="c-item">Sony</option>
-                                    </optgroup>
-                                    <optgroup  class="cate-item-head" label="Electronic">
-                                        <option class="c-item">Mobile</option>
-                                        <option class="c-item">Speaker</option>
-                                        <option class="c-item">Headphone</option>
-                                    </optgroup>
+                                    {{--@foreach($categories as $category)
+                                        <optgroup  class="cate-item-head" label="{{ $category->title }}"></optgroup>
+                                    @endforeach--}}
                                 </select>
                             </div>
                             <div class="header-search">
