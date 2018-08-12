@@ -110,7 +110,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12">
                     <div class="logo">
-                        <a href="{{ route('home') }}" title="Malias"><img src="{{ asset('shop') }}/img/logo.png" alt="Malias"></a>
+                        <a href="{{ route('home') }}" title="Главная"><img src="{{ asset('shop') }}/img/logo.png" alt="Malias"></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-12">
@@ -146,29 +146,9 @@
                     <div class="mainmenu hidden-sm hidden-xs">
                         <nav>
                             <ul>
-                                <li><a href="index.html">Home</a>
-                                    <ul>
-                                        <li><a href="index.html">Home Versions 1</a></li>
-                                        <li><a href="index-2.html">Home Versions 2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="about.html">About Us</a></li>
-                                <li class="hot"><a href="shop.html">Bestseller Products</a></li>
-                                <li class="new"><a href="shop-list.html">New Products</a></li>
-                                <li><a href="shop.html">Special Products</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="account.html">Create Account</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                        <li><a href="product-details.html">Product details</a></li>
-                                        <li><a href="shop.html">Shop Grid View</a></li>
-                                        <li><a href="shop-list.html">Shop List View</a></li>
-                                        <li><a href="wishlist.html">Wish List</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="{{ route('home') }}">Главная</a></li>
+                                <li><a href="{{ route('news') }}">Новости</a></li>
+                                <li><a href="https://vk.com/it.academy" target="_blank">Контакты</a></li>
                             </ul>
                         </nav>
                     </div>
