@@ -31,11 +31,11 @@
                                     <h4><a href="">{{ $product['item']->title }}</a></h4>
                                 </td>
                                 <td class="cart_price">
-                                    <p>{{ $product['price'] }} руб.</p>
+                                    <p>{{ $product['price']/$product['qty'] }} руб.</p>
                                 </td>
                                 <td class="cart_quantity">
                                     <div class="cart_quantity_button">
-                                        <a class="cart_quantity_up" href=""> + </a>
+                                        <a class="cart_quantity_up" href="{{ route('product.increaseByOne', ['id' => $product['item']->id]) }}"> + </a>
                                         <input class="cart_quantity_input" type="text" name="quantity" value="{{$product['qty']}}" autocomplete="off" size="2">
                                         <a class="cart_quantity_down" href="{{ route('product.reduceByOne', ['id' => $product['item']->id]) }}"> - </a>
                                     </div>
@@ -54,6 +54,7 @@
                         </tbody>
                     </table>
                     <a class="btn btn-default" href="{{ route('get.checkout') }}">Оформить заказ</a>
+                    <a class="btn btn-default" href="{{ route('clear.cart') }}">Очистить корзину</a>
                 @else
                     <h1>Ваша корзина пуста</h1>
                 @endif

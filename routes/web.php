@@ -21,6 +21,7 @@ Auth::routes();
 Route::get('/', 'MainController@index')->name('home');
 Route::get('/news', 'MainController@getNews')->name('news');
 
+
 Route::group(['prefix' => 'dashboard'], function () {
     Route::group(['middleware' => 'auth'], function (){
         Route::get('/', function (){
@@ -38,6 +39,14 @@ Route::group(['prefix' => 'dashboard'], function () {
         ));
         Route::resource('/categories', 'CategoriesController');
         Route::resource('/products', 'ProductController');
+        Route::get('logout', array(
+            'as' => 'logout',
+            function(){
+                Auth::logout();
+                Session::flush();
+                return Redirect::route('home');
+            }
+        ));
     });
 });
 
@@ -55,9 +64,14 @@ Route::get('/shopping-cart/', [
 Route::get('/checkout', 'CheckoutController@getCheckout')->name('get.checkout');
 Route::post('/checkout', 'CheckoutController@postCheckout')->name('post.checkout');
 
+Route::get('/clear_cart', 'CartController@clearCart')->name('clear.cart');
 Route::get('/reduce/{id}', [
     'uses' => 'CartController@getReduceByOne',
     'as' => 'product.reduceByOne'
+]);
+Route::get('/increase/{id}', [
+    'uses' => 'CartController@getIncreaseByOne',
+    'as' => 'product.increaseByOne'
 ]);
 Route::get('/remove/{id}', [
     'uses' => 'CartController@getRemoveItem',

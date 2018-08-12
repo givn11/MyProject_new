@@ -30,7 +30,7 @@ class CartController extends Controller
         $cart->add($product, $product->id);
         //Кладем в сессию нашу корзину в сериализованном виде
         $request->session()->put('cart', $cart);
-        return redirect()->route('home');
+        return back();
     }
 
     public function getReduceByOne($id){
@@ -44,6 +44,28 @@ class CartController extends Controller
             Session::forget('cart');
         }
 
+        return redirect()->route('product.shoppingCart');
+    }
+
+    public function getIncreaseByOne($id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->increaseByOne($id);
+
+        if(count($cart->items) > 0){
+            Session::put('cart', $cart);
+        }else {
+            Session::forget('cart');
+        }
+        return redirect()->route('product.shoppingCart');
+    }
+
+    public function clearCart(Request $request){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->clear();
+        $request->session()->put('cart', $cart);
+        Session::forget('cart');
         return redirect()->route('product.shoppingCart');
     }
 

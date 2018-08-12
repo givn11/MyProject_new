@@ -459,7 +459,7 @@
                                                 <span class="sale-percent">-55%</span>
                                             </div>--}}
                                             <div class="product-img">
-                                                <a href="#">
+                                                <a href="{{ route('product.add', ['product_id' => $product->id]) }}">
                                                     <img class="primary-img" src="{{ env('URL_IMAGE_PRODUCTS') . $product->thumb }}" alt="Product">
                                                     <img class="secondary-img" src="{{ asset('shop') }}/img/product/mediam/12bg.gif" alt="Product">
                                                 </a>
@@ -481,7 +481,8 @@
                                             <div class="product-action">
                                                 <div class="button-group">
                                                     <div class="product-button">
-                                                        <button><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+                                                        <a href="{{ route('product.add', ['product_id' => $product->id]) }}"
+                                                           class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                     </div>
                                                     <div class="product-button-2">
                                                         <a href="#" data-toggle="tooltip" title="Wishlist"><i class="fa fa-heart-o"></i></a>
